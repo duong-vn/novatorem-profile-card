@@ -41,63 +41,53 @@ def load_avatar() -> str | None:
 
 
 def render_card(avatar: str | None) -> str:
-    """Render a GitHub-compatible profile card without scripts or foreignObject."""
+    """Render a GitHub-compatible animated profile card without music metadata."""
     name = escape(PROFILE["name"])
     role = escape(PROFILE["role"])
-    location = escape(PROFILE["location"])
     avatar_markup = (
-        f'<image href="{avatar}" x="857" y="89" width="210" height="210" '
+        f'<image href="{avatar}" x="20" y="20" width="167" height="167" '
         'clip-path="url(#avatar-clip)" preserveAspectRatio="xMidYMid slice"/>'
         if avatar
         else (
-            '<circle cx="962" cy="194" r="105" fill="url(#avatar-fallback)"/>'
-            '<text x="962" y="211" text-anchor="middle" fill="#ffffff" '
-            'font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" '
-            'font-size="62" font-weight="700">NTD</text>'
+            '<rect x="20" y="20" width="167" height="167" rx="12" fill="#0d3338"/>'
+            '<text x="103.5" y="112" text-anchor="middle" dominant-baseline="middle" '
+            'fill="#8ad9d5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" '
+            'font-size="44" font-weight="700">NTD</text>'
         )
     )
-    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" role="img" aria-labelledby="title description">
-  <title id="title">{name} animated profile card</title>
-  <desc id="description">{role} based in {location}.</desc>
+    # ponytail: decorative 60-bar pattern — upgrade when live audio data is intentionally added.
+    heights = (51, 69, 78, 63, 58, 52, 49, 46, 42, 62, 70, 48, 77, 42, 72, 57, 39, 54, 67, 76, 50, 44, 65, 73, 57, 68, 45, 61, 74, 48, 43, 52, 49, 71, 41, 58, 64, 55, 46, 51, 59, 65, 76, 72, 48, 55, 61, 70, 75, 64, 51, 46, 42, 39, 44, 48, 53, 61, 69, 66)
+    bars = "".join(
+        f'<rect class="bar" x="{215 + index * 11}" y="{187 - height}" width="8" '
+        f'height="{height}" rx="3" fill="url(#equalizer)"/>'
+        for index, height in enumerate(heights)
+    )
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 207" role="img" aria-labelledby="title description">
+  <title id="title">{name} profile card</title>
+  <desc id="description">{role}.</desc>
   <defs>
-    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#07152f"/><stop offset="0.47" stop-color="#35246d"/><stop offset="1" stop-color="#9b255f"/></linearGradient>
-    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity="0.23"/><stop offset="1" stop-color="#ffffff" stop-opacity="0.07"/></linearGradient>
-    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#57f5ff"/><stop offset="0.5" stop-color="#b48cff"/><stop offset="1" stop-color="#ff91d4"/></linearGradient>
-    <radialGradient id="cyan" cx="0.16" cy="0.15" r="0.8"><stop offset="0" stop-color="#2de2e6" stop-opacity="0.78"/><stop offset="1" stop-color="#2de2e6" stop-opacity="0"/></radialGradient>
-    <radialGradient id="pink" cx="0.85" cy="0.8" r="0.78"><stop offset="0" stop-color="#ff76ce" stop-opacity="0.72"/><stop offset="1" stop-color="#ff76ce" stop-opacity="0"/></radialGradient>
-    <linearGradient id="avatar-fallback" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2de2e6"/><stop offset="1" stop-color="#a855f7"/></linearGradient>
-    <clipPath id="avatar-clip"><circle cx="962" cy="194" r="105"/></clipPath>
-    <filter id="blur"><feGaussianBlur stdDeviation="38"/></filter>
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="16" stdDeviation="15" flood-color="#020617" flood-opacity="0.5"/></filter>
+    <linearGradient id="background" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#09272a"/>
+      <stop offset="1" stop-color="#041517"/>
+    </linearGradient>
+    <linearGradient id="equalizer" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#19777a"/>
+      <stop offset="1" stop-color="#82cbc9"/>
+    </linearGradient>
+    <clipPath id="avatar-clip"><rect x="20" y="20" width="167" height="167" rx="12"/></clipPath>
     <style>
-      @keyframes drift-a {{ 0%,100% {{ transform: translate(0,0); }} 50% {{ transform: translate(45px,18px); }} }}
-      @keyframes drift-b {{ 0%,100% {{ transform: translate(0,0); }} 50% {{ transform: translate(-38px,-20px); }} }}
-      @keyframes pulse {{ 0%,100% {{ opacity:.32; transform:scaleY(.36); }} 50% {{ opacity:1; transform:scaleY(1); }} }}
-      .orb-a {{ animation:drift-a 12s ease-in-out infinite; }} .orb-b {{ animation:drift-b 15s ease-in-out infinite; }}
-      .bar {{ transform-box:fill-box; transform-origin:center bottom; animation:pulse 1.4s ease-in-out infinite; }}
-      .bar:nth-child(2n) {{ animation-delay:-.35s; }} .bar:nth-child(3n) {{ animation-delay:-.7s; }} .bar:nth-child(5n) {{ animation-delay:-1.05s; }}
+      @keyframes equalize {{ 0%, 100% {{ opacity: .55; transform: scaleY(.42); }} 50% {{ opacity: 1; transform: scaleY(1); }} }}
+      .bar {{ transform-box: fill-box; transform-origin: center bottom; animation: equalize 1.4s ease-in-out infinite; }}
+      .bar:nth-child(2n) {{ animation-delay: -.3s; animation-duration: 1.15s; }}
+      .bar:nth-child(3n) {{ animation-delay: -.7s; animation-duration: 1.55s; }}
+      .bar:nth-child(5n) {{ animation-delay: -1.1s; animation-duration: .95s; }}
     </style>
   </defs>
-  <rect width="1200" height="420" rx="28" fill="url(#background)"/>
-  <circle class="orb-a" cx="156" cy="72" r="215" fill="url(#cyan)" filter="url(#blur)"/>
-  <circle class="orb-b" cx="1075" cy="345" r="250" fill="url(#pink)" filter="url(#blur)"/>
-  <g filter="url(#shadow)">
-    <rect x="64" y="52" width="1072" height="316" rx="24" fill="url(#glass)" stroke="#ffffff" stroke-opacity=".35"/>
-    <rect x="65" y="53" width="1070" height="73" rx="24" fill="#ffffff" fill-opacity=".06"/>
-    <circle cx="103" cy="89" r="7" fill="#ff8cab"/><circle cx="128" cy="89" r="7" fill="#ffd36d"/><circle cx="153" cy="89" r="7" fill="#64e6a5"/>
-    <text x="1094" y="95" text-anchor="end" fill="#d7f9ff" fill-opacity=".84" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" letter-spacing="2">PROFILE / LIVE</text>
-    <rect x="108" y="160" width="12" height="130" rx="6" fill="url(#accent)"/>
-    <text x="148" y="184" fill="#ccfbff" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" font-weight="700" letter-spacing="3">HELLO, WORLD</text>
-    <text x="146" y="242" fill="#ffffff" font-family="system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="51" font-weight="700">{name}</text>
-    <text x="148" y="281" fill="#ebddff" font-family="system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="24">{role}</text>
-    <text x="148" y="323" fill="#d7f9ff" font-family="system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="18">{location}  ·  TypeScript  ·  React  ·  Next.js  ·  NestJS</text>
-    <circle cx="962" cy="194" r="112" fill="none" stroke="url(#accent)" stroke-width="4"/>
-    {avatar_markup}
-    <g transform="translate(876 321)">''' + "".join(
-        f'<rect class="bar" x="{index * 17}" y="{34 - height}" width="9" height="{height}" rx="4" fill="url(#accent)"/>'
-        for index, height in enumerate((18, 31, 12, 35, 24, 39, 16, 29, 21, 37, 14, 30))
-    ) + '''</g>
-  </g>
+  <rect width="900" height="207" rx="13" fill="url(#background)" stroke="#165257" stroke-width="1.5"/>
+  {avatar_markup}
+  <text x="550" y="51" text-anchor="middle" fill="#bde4e2" font-family="system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="30" font-weight="600">{name}</text>
+  <text x="550" y="93" text-anchor="middle" fill="#56a8a8" font-family="system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="17">{role}</text>
+  <g>{bars}</g>
 </svg>'''
 
 
