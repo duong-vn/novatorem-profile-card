@@ -102,6 +102,7 @@ def render_card(avatar: str | None) -> str:
 
 
 @app.get("/api/profile-card")
+@app.get("/api/profile_card.py")
 def profile_card() -> Response:
     """Serve the animated profile card as SVG."""
     response = Response(render_card(load_avatar()), mimetype="image/svg+xml")
