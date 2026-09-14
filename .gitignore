@@ -1,9 +1,16 @@
-#MacOS
+# MacOS
 .DS_Store
 
 # Environment variables
 .env
 
-# Pycache
+# Python cache
 __pycache__
 .venv
+
+# Deployment metadata
+.vercel
+
+# Local endpoint checks
+.headers
+.profile-card.svg
