@@ -1,8 +1,12 @@
- {
-  "redirects": [
+{
+  "rewrites": [
     {
-      "source": "/",
-      "destination": "https://github.com/novatorem/novatorem"
+      "source": "/api/profile-card",
+      "destination": "/api/profile_card.py"
+    },
+    {
+      "source": "/health",
+      "destination": "/api/profile_card.py"
     }
   ]
 }

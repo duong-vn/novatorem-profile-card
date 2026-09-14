@@ -1,10 +1,14 @@
-&nbsp;<div align="center">
-  [![Last.fm](https://novatorem.vercel.app/api/orchestrator?background_type=blur_dark&border_color=ffffff")](https://novatorem.vercel.app/redirect)
-</div>
+# duong-vn profile motion card
 
-&nbsp;<div align="center">
-  [Fork](https://github.com/novatorem/novatorem/blob/main/SetUp.md) this [unlicensed](https://choosealicense.com/licenses/unlicense/) repository to recreate!<br><br>
-  [![Linkedin](https://img.shields.io/badge/linked-in-369?style=flat-square&logo=linkedin&logoColor=white&color=blue)](https://www.linkedin.com/in/andrew-novac)
-  [![E-Mail](https://img.shields.io/badge/email-reveal-2a8?style=flat-square&logo=gmail&logoColor=white)](https://mail.novac.dev/)
-  [![Visits](https://komarev.com/ghpvc/?username=novatorem&logo=GitHub&label=github%20visits&color=336699&logoColor=white&style=flat-square)](https://github.com/novatorem)
-</div>
+Animated GitHub profile card for [Nguyen Tuan Duong](https://github.com/duong-vn).
+
+```html
+<img src="https://YOUR-VERCEL-DOMAIN/api/profile-card" alt="Nguyen Tuan Duong profile card" />
+```
+
+- Returns a self-contained SVG with subtle CSS animation.
+- Loads only the fixed public avatar `https://avatars.githubusercontent.com/duong-vn`.
+- Falls back to initials if the avatar cannot be fetched.
+- Has no Spotify, Last.fm, music, analytics, environment variables, or user-controlled remote URLs.
+
+Derived from [novatorem/novatorem](https://github.com/novatorem/novatorem), released under the Unlicense.
