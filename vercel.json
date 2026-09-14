@@ -7,6 +7,19 @@
     {
       "source": "/health",
       "destination": "/api/profile_card.py"
+    },
+    {
+      "source": "/(.*)",
+      "destination": {
+        "type": "service",
+        "service": "web"
+      }
     }
-  ]
+  ],
+  "services": {
+    "web": {
+      "root": ".",
+      "entrypoint": "api/profile_card.py"
+    }
+  }
 }
